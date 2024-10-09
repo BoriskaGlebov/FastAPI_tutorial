@@ -1,0 +1,41 @@
+[
+    {
+        "student_id": 0,
+        "phone_number": "+7 (985) 200-0338",
+        "first_name": "string",
+        "last_name": "string",
+        "date_of_birth": "2024-10-08",
+        "email": "user@example.com",
+        "address": "stringstri",
+        "enrollment_year": 2002,
+        "major": "\u0418\u043d\u0444\u043e\u0440\u043c\u0430\u0442\u0438\u043a\u0430",
+        "course": 1,
+        "special_notes": "string"
+    },
+    {
+        "student_id": 0,
+        "phone_number": "+7 (985) 200-0338",
+        "first_name": "string",
+        "last_name": "string",
+        "date_of_birth": "2024-10-08",
+        "email": "user@example.com",
+        "address": "stringstri",
+        "enrollment_year": 2002,
+        "major": "\u0418\u043d\u0444\u043e\u0440\u043c\u0430\u0442\u0438\u043a\u0430",
+        "course": 1,
+        "special_notes": "string"
+    },
+    {
+        "student_id": 22,
+        "phone_number": "+7 (985) 200-0338",
+        "first_name": "string",
+        "last_name": "string",
+        "date_of_birth": "2024-10-08",
+        "email": "user@example.com",
+        "address": "stringstri",
+        "enrollment_year": 2002,
+        "major": "\u0418\u043d\u0444\u043e\u0440\u043c\u0430\u0442\u0438\u043a\u0430",
+        "course": 1,
+        "special_notes": "string"
+    }
+]

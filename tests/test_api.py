@@ -1,9 +1,6 @@
 import pytest
 import requests
 
-from tests.conftest import api_client
-
-
 def test_get_all_students(api_client):
     url = "http://127.0.0.1:8000/students"
     response = api_client.get(url)
@@ -19,7 +16,7 @@ def test_get_students_with_param_requests(api_client, course, result):
 
 
 @pytest.mark.parametrize("course, major, enrollment_year, result",
-                         [(2, None, 2018, 1), (2, 'Экология', 2020, 0), ],
+                         [(2, None, 2018, 1), (2, 'Экономика', 2018, 1), ],
                          ids=['NONE', 'ЭКололгия'])
 def test_get_students_with_param_mix(api_client, course, major, enrollment_year, result):
     url = f"http://127.0.0.1:8000/students/{course}"
