@@ -2,7 +2,7 @@ from datetime import date
 
 from pydantic import ValidationError
 
-from app.models import SStudent
+from app.students.models import SStudent
 
 
 def valid_student(data: dict) -> None:

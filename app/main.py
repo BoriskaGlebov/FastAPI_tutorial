@@ -1,10 +1,8 @@
-import json
-
 from fastapi import FastAPI, HTTPException
 from fastapi.params import Depends
 
 from app.json_db import add_student, upd_student, dell_student
-from app.models import SStudent, Major, SUpdateFilter, SStudentUpdate, SDeleteFilter
+from app.students.pydantic_models import SStudent, Major, SUpdateFilter, SStudentUpdate, SDeleteFilter
 from utils import json_to_dict_list
 import os
 from typing import Optional
