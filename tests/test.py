@@ -1,29 +1,28 @@
-from datetime import date
-
-from pydantic import ValidationError
-
-from app.students.models import SStudent
+import asyncio
+import httpx
 
 
-def valid_student(data: dict) -> None:
-    try:
-        student = SStudent(**data)
-        print(student)
-    except ValidationError as e:
-        print(f"Ошибка валидации: {e}")
-
-if __name__ == '__main__':
-    student_data = {
-        "student_id": 1,
-        "phone_number": "+1234567890",
-        "first_name": "Иван",
-        "last_name": "Иванов",
-        "date_of_birth": date(2000, 1, 1),
-        "email": "ivan.ivanov@example.com",
-        "address": "Москва, ул. Пушкина, д. Колотушкина",
-        "enrollment_year": 2022,
-        "major": "asd",
-        "course": 3,
-        "special_notes": "Увлекается программированием"
+async def add_major(major_name: str, major_description: str):
+    url = 'http://127.0.0.1:8000/majors/add/'
+    headers = {
+        'accept': 'application/json',
+        'Content-Type': 'application/json'
     }
-    valid_student(student_data)
+    data = {
+        "major_name": major_name,
+        "major_description": major_description,
+        "count_students": 0
+    }
+
+    async with httpx.AsyncClient() as client:
+        response = await client.post(url, headers=headers, json=data)
+        return response.json()
+
+
+# вызов функции
+response = asyncio.run(add_major(major_name='Философия', major_description='Тут мы обучаем философов'))
+print(response)
+response = asyncio.run(add_major(major_name='Математика', major_description='Царица всех наук'))
+print(response)
+response = asyncio.run(add_major(major_name='Литература', major_description='Тут мы обучаем чтению и анализу книг'))
+print(response)

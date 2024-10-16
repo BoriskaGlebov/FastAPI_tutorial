@@ -1,8 +1,8 @@
-"""Initial revision
+"""Init revision
 
-Revision ID: e588bbafa1b1
+Revision ID: 0cbd23249f25
 Revises: 
-Create Date: 2024-10-10 23:31:12.197835
+Create Date: 2024-10-15 23:10:36.932293
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = 'e588bbafa1b1'
+revision: str = '0cbd23249f25'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -33,13 +33,14 @@ def upgrade() -> None:
     op.create_table('students',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('phone_number', sa.String(), nullable=False),
-    sa.Column('first_name', sa.String(), nullable=False),
+    sa.Column('first_name', sa.String(), nullable=True),
     sa.Column('last_name', sa.String(), nullable=False),
     sa.Column('date_of_birth', sa.Date(), nullable=False),
     sa.Column('email', sa.String(), nullable=False),
     sa.Column('address', sa.Text(), nullable=False),
     sa.Column('enrollment_year', sa.Integer(), nullable=False),
     sa.Column('course', sa.Integer(), nullable=False),
+    sa.Column('special_notes', sa.String(), nullable=True),
     sa.Column('major_id', sa.Integer(), nullable=False),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('now()'), nullable=False),
     sa.Column('updated_at', sa.DateTime(), server_default=sa.text('now()'), nullable=False),
