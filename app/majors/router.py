@@ -2,11 +2,13 @@ from fastapi import APIRouter
 from fastapi.params import Depends
 
 from app.majors.dao import MajorsDAO
-from app.majors.schemas import SMajorsAdd, SMajorsUpdDesc
+from app.majors.schemas import SMajorsAdd, SMajorsUpdDesc, SMajors
 
 router = APIRouter(prefix='/majors', tags=['Работа с факультетами'])
 
-
+@router.get("/")
+async def get_all_majors()->list[SMajors]:
+    return await MajorsDAO.find_all()
 
 @router.post("/add/")
 async def register_user(major: SMajorsAdd) -> dict:
