@@ -1,6 +1,7 @@
 from sqlalchemy import select, insert, update, event, delete
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import joinedload, aliased, load_only
+from yaml import safe_dump_all
 
 from app.majors.models import Major
 from app.students.models import Student
@@ -65,6 +66,15 @@ class StudentDAO(BaseDAO):
     #         student_data['major'] = major_info.major_name
     #
     #         return student_data
+    @classmethod
+    async def find_all(cls, **filter_by):
+        async with async_session_maker() as session:
+            query = select(cls.model).options(joinedload(cls.model.major)).filter_by(**filter_by)
+            result = await session.execute(query)
+            # print([stud.major.major_name for stud in result.scalars().all()])
+            stud_data = [{**stud.to_dict(), 'major': stud.major.major_name} for stud in result.scalars().all()]
+            return stud_data
+
     @classmethod
     async def find_full_data(cls, student_id: int):
         async with async_session_maker() as session:

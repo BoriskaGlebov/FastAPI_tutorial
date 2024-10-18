@@ -1,8 +1,11 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.params import Depends
+from starlette.staticfiles import StaticFiles
+
 from app.students.router import router as router_students
 from app.majors.router import router as router_majors
 from app.users.router import router as router_users
+from app.pages.router import router as router_pages
 
 from app.json_db import add_student, upd_student, dell_student
 from app.students.pydantic_models import SStudent, Major, SUpdateFilter, SStudentUpdate, SDeleteFilter
@@ -34,10 +37,11 @@ app = FastAPI()
 @app.get("/")
 def home_page():
     return {"message": "Привет, Хабр!"}
-
+app.mount('/static', StaticFiles(directory='static'), 'static')
 app.include_router(router=router_users)
 app.include_router(router=router_students)
 app.include_router(router=router_majors)
+app.include_router(router=router_pages)
 
 # @app.get("/students")
 # def get_all_students():
