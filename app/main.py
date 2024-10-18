@@ -35,7 +35,7 @@ app = FastAPI()
 def home_page():
     return {"message": "Привет, Хабр!"}
 
-app.include_router(router_users)
+app.include_router(router=router_users)
 app.include_router(router=router_students)
 app.include_router(router=router_majors)
 

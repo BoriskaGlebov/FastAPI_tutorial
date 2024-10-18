@@ -4,7 +4,7 @@ from app.users.auth import get_password_hash, authenticate_user, create_access_t
 from app.users.dao import UsersDAO
 from app.users.dependencies import get_current_user, get_current_admin_user
 from app.users.models import User
-from app.users.schemas import SUserRegister, SUserAuth
+from app.users.schemas import SUserRegister, SUserAuth, SUserAdmin
 
 router = APIRouter(prefix='/auth', tags=['Auth'])
 
@@ -33,15 +33,41 @@ async def auth_user(response: Response, user_data: SUserAuth):
     response.set_cookie(key="users_access_token", value=access_token, httponly=True)
     return {'access_token': access_token, 'refresh_token': None}
 
+
 @router.get("/me/")
 async def get_me(user_data: User = Depends(get_current_user)):
     return user_data
+
 
 @router.post("/logout/")
 async def logout_user(response: Response):
     response.delete_cookie(key="users_access_token")
     return {'message': 'Пользователь успешно вышел из системы'}
 
+
 @router.get("/all_users/")
 async def get_all_users(user_data: User = Depends(get_current_admin_user)):
     return await UsersDAO.find_all()
+
+
+@router.put('/create_admin', summary="Доабавление прав полльзователю")
+async def add_admin(user: SUserAdmin, user_data: User = Depends(get_current_user))->dict:
+    if user_data and user.code == "ADMIN":
+        print(user)
+        print(user_data.is_admin)
+        user_data.is_admin = True
+        print(user_data.is_admin)
+        res = await UsersDAO.update(filter_by={'email': user_data.email},
+                              is_admin=user_data.is_admin)
+        return {user_data.email:"теперь админ"}
+    else:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Неверный код сокрее всего')
+
+
+@router.delete('/delete_admin/{id}', summary="Удалить права админа  у пользователя")
+async def del_admin(user_id: int, user_data: User = Depends(get_current_admin_user)):
+    if user_data:
+        res = await UsersDAO.update(filter_by={'id':user_id},
+                                    is_admin=False)
+        return {"user_id":user_id,"вердикт": "удаление админ прав"}
+
