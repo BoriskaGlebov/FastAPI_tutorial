@@ -53,10 +53,7 @@ async def get_all_users(user_data: User = Depends(get_current_admin_user)):
 @router.put('/create_admin', summary="Доабавление прав полльзователю")
 async def add_admin(user: SUserAdmin, user_data: User = Depends(get_current_user))->dict:
     if user_data and user.code == "ADMIN":
-        print(user)
-        print(user_data.is_admin)
         user_data.is_admin = True
-        print(user_data.is_admin)
         res = await UsersDAO.update(filter_by={'email': user_data.email},
                               is_admin=user_data.is_admin)
         return {user_data.email:"теперь админ"}
