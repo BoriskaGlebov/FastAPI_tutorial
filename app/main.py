@@ -36,6 +36,7 @@ app = FastAPI()
 
 @app.get("/")
 def home_page():
+
     return {"message": "Привет, Хабр!"}
 app.mount('/static', StaticFiles(directory='static'), 'static')
 app.include_router(router=router_users)
